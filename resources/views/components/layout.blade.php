@@ -16,14 +16,24 @@
                 Textyy
             </div>
             <div class="col-md-auto row">
+                @auth
                 <div class="col align-middle align-self-center">
-                    username
+                    {{ auth()->user()->name }}
                 </div>
                 <div class="col-auto">
-                    <a href="/login"><button class="btn btn-primary">Login</button></a>
-                    <a href="/register"><button class="btn btn-secondary">Signup</button></a>
-                    <a href="/logout"><button class="btn btn-primary">Logout</button></a>
+                    <form class="d-inline" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary"
+                            onclick="return confirm('Are you sure you want to logout?')"
+                            >logout</button>
+                    </form>
                 </div>
+                @else
+                <div class="col-auto">
+                    <a href="{{ route('login') }}"><button class="btn btn-primary">Login</button></a>
+                    <a href="{{ route('register') }}"><button class="btn btn-secondary">Signup</button></a>
+                </div>
+                @endauth
             </div>
         </nav>
         <article class="p-2">
