@@ -36,7 +36,7 @@
     <div class="text-break">
         @forelse ($posts as $post)
             <div class="border-bottom m-3">
-                <p class="fs-5 fw-bold">{{ $post->user ? $post->user->name : 'Anonymous' }} ::
+                <p class="fs-5 fw-bold"> <a href="/user/{{ $post->user ? $post->user->id : '0' }}" >{{ $post->user ? $post->user->name : 'Anonymous' }} </a>::
                     <span class="fs-6">{{ $post->created_at->diffForHumans() }}</span>
                     @if($post->updated_at->gt($post->created_at->addSeconds(5)))
                     <span class="fs-6 fst-italic">Edited</span>
