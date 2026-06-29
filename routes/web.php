@@ -28,6 +28,8 @@ Route::middleware('guest')->group(function () {
     Route::view('/signup', 'auth.signup')->name("register");
     Route::post('/signup', Register::class);
     Route::post('/login', Login::class)->name('login');
+    Route::view('/search', 'search')->name('search');
+    Route::post('/search', [PostController::class, 'show']);
 });
 
 Route::controller(UserProfileController::class)->group(function () {

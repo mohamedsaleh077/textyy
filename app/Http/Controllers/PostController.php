@@ -8,18 +8,14 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    use AuthorizesRequests; 
+    use AuthorizesRequests;
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($page = null)
     {
-        $posts = Post::with('user')
-        ->latest()
-        ->take(50)
-        ->get();
-        
+        $posts = Post::with('user')->latest()->paginate(5);
         return view('posts', ['posts' => $posts]);
     }
 
@@ -37,11 +33,11 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'content' => 'required|string|max:255|min:10'
+            'content' => 'required|string|max:255|min:10',
         ], [
             'content.required' => "write something bro",
             "content.max" => "YOU MUSN'T WRITE MORE THAN 255 CHAR!",
-            "content.min" => "Too Small to post, say more"
+            "content.min" => "Too Small to post, say more",
         ]);
 
         auth()->user()->post()->create($validate);
@@ -52,9 +48,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $keyword = $request->validate([
+            'keyword' => 'required|string|max:255|min:1',
+        ]);
+        // dd($keyword);
+        $posts = Post::with('user')->latest()->where("content", "like", "%" . $keyword['keyword'] . "%")->paginate(5);
+        return view('search', ['results' => $posts]);
     }
 
     /**
@@ -63,7 +64,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $this->authorize("update", $post);
-        
+
         return view('edit', compact('post'));
     }
 
@@ -74,11 +75,11 @@ class PostController extends Controller
     {
         $this->authorize("update", $post);
         $validated = $request->validate([
-            'content' => 'required|string|max:255|min:10'
+            'content' => 'required|string|max:255|min:10',
         ], [
             'content.required' => "write something bro",
             "content.max" => "YOU MUSN'T WRITE MORE THAN 255 CHAR!",
-            "content.min" => "Too Small to post, say more"
+            "content.min" => "Too Small to post, say more",
         ]);
 
         $post->update($validated);

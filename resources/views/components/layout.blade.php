@@ -18,7 +18,7 @@
             <div class="col-md-auto row">
                 @auth
                 <div class="col align-middle align-self-center">
-                    {{ auth()->user()->name }}
+                    <a href="/user/{{  auth()->user()->id }}">{{ auth()->user()->name }}</a>
                 </div>
                 <div class="col-auto">
                     <form class="d-inline" action="{{ route('logout') }}" method="POST">
@@ -32,6 +32,7 @@
                 <div class="col-auto">
                     <a href="{{ route('login') }}"><button class="btn btn-primary">Login</button></a>
                     <a href="{{ route('register') }}"><button class="btn btn-secondary">Signup</button></a>
+                    <a href="{{ route('search') }}"><button class="btn btn-secondary">Search</button></a>
                 </div>
                 @endauth
             </div>
