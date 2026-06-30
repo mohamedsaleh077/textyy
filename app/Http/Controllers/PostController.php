@@ -50,11 +50,9 @@ class PostController extends Controller
      */
     public function show(Request $request)
     {
-        $keyword = $request->validate([
-            'keyword' => 'required|string|max:255|min:1',
-        ]);
-        // dd($keyword);
-        $posts = Post::with('user')->latest()->where("content", "like", "%" . $keyword['keyword'] . "%")->paginate(5);
+        $keyword['keyword'] = $_GET['keyword'] ?? "";
+        $posts = Post::with('user')->latest()->where("content", "like", "%" . $keyword['keyword'] . "%")->paginate(5)->withQueryString();
+        ;
         return view('search', ['results' => $posts]);
     }
 

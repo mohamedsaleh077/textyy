@@ -1,4 +1,5 @@
 @props(['posts'])
+<hr>
 <div class="text-break">
     @forelse ($posts as $post)
     <div class="border-bottom m-3">
@@ -27,4 +28,7 @@
     @empty
     <p>No Posts yet! Be the first who starts the conversation</p>
     @endforelse
+    <div class="mt-4">
+        {{ $posts->links()}}
+    </div>
 </div>

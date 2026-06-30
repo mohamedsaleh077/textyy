@@ -8,7 +8,7 @@
     <h3>{{ $profile['email'] }}</h3>
     <h6>Joined At: {{ $profile['created_at']->diffForHumans() }}</h6>
 
-    <x-showposts :posts="$profile['posts']" />
+    <x-showposts :posts="$posts" />
 
     @else
     <h1>No such a user or it is an annonymous user</h1>

@@ -36,13 +36,6 @@
         @endauth
     </div>
 
-    <hr>
-    <a href="/posts?page={{ (isset($_GET['page']) && $_GET['page'] < 1) ? $_GET['page'] - 1 : 1 }}"><button
-            class="btn btn-primary">Previous</button></a>
-
     <x-showposts :posts="$posts" />
 
-
-    <a href="/posts?page={{ (isset($_GET['page']) && $_GET['page'] < 1) ? $_GET['page'] - 1 : 1 }}"><button
-            class="btn btn-primary">Next</button></a>
 </x-layout>

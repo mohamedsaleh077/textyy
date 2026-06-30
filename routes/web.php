@@ -27,11 +27,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('guest')->group(function () {
     Route::view('/signup', 'auth.signup')->name("register");
     Route::post('/signup', Register::class);
-    Route::post('/login', Login::class)->name('login');
-    Route::view('/search', 'search')->name('search');
-    Route::post('/search', [PostController::class, 'show']);
+    Route::post('/login', Login::class);
+    Route::view('/login', 'auth.login')->name('login');
 });
 
 Route::controller(UserProfileController::class)->group(function () {
     Route::get('/user/{id}', 'index');
 });
+Route::get('/search', [PostController::class, 'show'])->name('search');
